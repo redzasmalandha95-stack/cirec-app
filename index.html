@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIREC — Business Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--g:#1a6b3c;--gl:#2d9e5f;--gg:#3ddc84;--o:#f97316;--w:#f8fafc;--dk:#0a0f0d;--c:#111a14;--b:#1e3328;--m:#6b8f78;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--dk);color:var(--w);min-height:100vh;}
+.screen{display:none;}.screen.active{display:block;}
+
+/* LOGIN */
+#lp{min-height:100vh;display:flex;align-items:center;justify-content:center;
+background:radial-gradient(ellipse at 60% 30%,rgba(45,158,95,.15),transparent 60%),var(--dk);padding:20px;}
+.lbox{width:100%;max-width:390px;background:var(--c);border:1px solid var(--b);border-radius:22px;padding:34px 28px;animation:up .5s ease;}
+.llogo{display:flex;align-items:center;gap:11px;margin-bottom:26px;}
+.lico{width:42px;height:42px;background:linear-gradient(135deg,var(--g),var(--gl));border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;}
+.ltitle{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;}
+.lsub{font-size:10px;color:var(--m);letter-spacing:1px;text-transform:uppercase;}
+.tabs{display:flex;background:rgba(255,255,255,.04);border-radius:9px;padding:3px;margin-bottom:20px;}
+.tab{flex:1;text-align:center;padding:8px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;color:var(--m);}
+.tab.on{background:var(--g);color:#fff;}
+.fi{margin-bottom:13px;}
+.fl{font-size:11px;color:var(--m);margin-bottom:5px;display:block;}
+.inp,.sel,.ta{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--b);border-radius:9px;padding:10px 12px;color:var(--w);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border .2s;}
+.inp:focus,.sel:focus,.ta:focus{border-color:var(--gl);}
+.inp::placeholder,.ta::placeholder{color:var(--m);}
+.sel option{background:var(--dk);}
+.ta{resize:vertical;min-height:68px;}
+.err{background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:var(--o);padding:9px 12px;border-radius:8px;font-size:12px;margin-bottom:13px;display:none;}
+.bmain{width:100%;padding:13px;background:linear-gradient(135deg,var(--g),var(--gl));color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-top:4px;transition:all .2s;}
+.bmain:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(45,158,95,.35);}
+.divl{text-align:center;color:var(--m);font-size:11px;margin:16px 0;position:relative;}
+.divl::before,.divl::after{content:'';position:absolute;top:50%;width:36%;height:1px;background:var(--b);}
+.divl::before{left:0;}.divl::after{right:0;}
+
+/* HOME */
+#hp{min-height:100vh;}
+.tbar{padding:14px 18px;border-bottom:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;background:rgba(10,15,13,.96);backdrop-filter:blur(12px);position:sticky;top:0;z-index:10;}
+.tlogo{display:flex;align-items:center;gap:9px;}
+.tico{width:32px;height:32px;background:linear-gradient(135deg,var(--g),var(--gl));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:11px;color:#fff;}
+.tname{font-family:'Syne',sans-serif;font-weight:700;font-size:13px;}
+.uchip{display:flex;align-items:center;gap:7px;padding:5px 11px;background:rgba(45,158,95,.1);border-radius:18px;border:1px solid var(--b);}
+.uav{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--o),#fb923c);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:9px;color:#fff;}
+.un{font-size:11px;font-weight:500;}
+.bout{background:rgba(239,68,68,.12);color:#f87171;border:none;padding:6px 12px;border-radius:7px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+
+.hc{padding:20px 18px;}
+.hero{text-align:center;padding:28px 12px 36px;animation:up .6s ease;}
+.hbadge{display:inline-flex;align-items:center;gap:5px;background:rgba(61,220,132,.1);border:1px solid rgba(61,220,132,.2);color:var(--gg);font-size:10px;font-weight:600;padding:4px 11px;border-radius:18px;margin-bottom:14px;letter-spacing:.5px;}
+.htitle{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;line-height:1.2;margin-bottom:10px;}
+.htitle span{color:var(--gg);}
+.hsub{font-size:13px;color:var(--m);line-height:1.6;max-width:320px;margin:0 auto;}
+.stitle{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:14px;}
+.stitle span{color:var(--gg);}
+
+/* DOMAINS */
+.dgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-bottom:24px;}
+.dc{background:var(--c);border:1px solid var(--b);border-radius:15px;padding:18px 14px;cursor:pointer;transition:all .25s;text-align:center;position:relative;overflow:hidden;}
+.dc:hover{border-color:var(--gl);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.3);}
+.dc.sel{border-color:var(--gg);background:rgba(61,220,132,.08);}
+.demi{font-size:30px;margin-bottom:9px;display:block;}
+.dname{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;margin-bottom:3px;}
+.ddesc{font-size:10px;color:var(--m);line-height:1.4;}
+.dchk{position:absolute;top:9px;right:9px;width:18px;height:18px;border-radius:50%;background:var(--gg);display:none;align-items:center;justify-content:center;font-size:10px;color:#000;}
+.dc.sel .dchk{display:flex;}
+
+.bstart{width:100%;padding:15px;background:linear-gradient(135deg,var(--g),var(--gl));color:#fff;border:none;border-radius:13px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-bottom:28px;}
+.bstart:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(45,158,95,.4);}
+.bstart:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* PLANS LIST */
+.plist{display:flex;flex-direction:column;gap:9px;margin-bottom:28px;}
+.pi{background:var(--c);border:1px solid var(--b);border-radius:13px;padding:14px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:all .2s;}
+.pi:hover{border-color:var(--gl);transform:translateX(3px);}
+.pemi{font-size:22px;flex-shrink:0;}
+.pinfo{flex:1;}
+.pname{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:2px;}
+.pmeta{font-size:11px;color:var(--m);}
+.pacts{display:flex;gap:5px;}
+.bsm{font-size:11px;padding:5px 9px;border-radius:6px;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;}
+.bview{background:rgba(61,220,132,.12);color:var(--gg);}
+.bpdf2{background:rgba(249,115,22,.12);color:var(--o);}
+.bdel{background:rgba(239,68,68,.1);color:#f87171;}
+.empty{text-align:center;padding:36px 20px;color:var(--m);}
+
+/* BP FORM */
+#bpp{min-height:100vh;}
+.bph{padding:14px 18px;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:11px;background:rgba(10,15,13,.96);backdrop-filter:blur(12px);position:sticky;top:0;z-index:10;}
+.bback{background:rgba(255,255,255,.06);border:1px solid var(--b);color:var(--w);padding:7px 13px;border-radius:8px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.dombadge{display:flex;align-items:center;gap:7px;padding:5px 13px;background:rgba(61,220,132,.1);border:1px solid rgba(61,220,132,.2);border-radius:18px;font-size:12px;font-weight:600;}
+.bpf{padding:18px;}
+.sblk{background:var(--c);border:1px solid var(--b);border-radius:15px;padding:18px;margin-bottom:14px;animation:up .4s ease;}
+.blt{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--gg);margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.bln{width:20px;height:20px;border-radius:50%;background:var(--g);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.btab{width:100%;border-collapse:collapse;}
+.btab th{font-size:10px;color:var(--m);text-align:left;padding:5px 7px;border-bottom:1px solid var(--b);}
+.btab td{padding:5px 3px;}
+.btab .inp{padding:7px 9px;font-size:12px;}
+.addr{background:rgba(45,158,95,.1);color:var(--gg);border:1px dashed rgba(61,220,132,.3);border-radius:7px;padding:7px;width:100%;font-size:11px;cursor:pointer;margin-top:7px;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.addr:hover{background:rgba(45,158,95,.2);}
+.delr{background:rgba(239,68,68,.1);color:#f87171;border:none;border-radius:5px;padding:5px 7px;cursor:pointer;font-size:11px;}
+.bsave{width:100%;padding:15px;background:linear-gradient(135deg,var(--g),var(--gl));color:#fff;border:none;border-radius:13px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:8px;}
+.bsave:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(45,158,95,.4);}
+.bpdfbp{width:100%;padding:14px;background:linear-gradient(135deg,var(--o),#fb923c);color:#fff;border:none;border-radius:13px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:9px;}
+.bpdfbp:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(249,115,22,.4);}
+.bwa{width:100%;padding:14px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border:none;border-radius:13px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:9px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.bwa:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(37,211,102,.4);}
+.ckrow{display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+.ckrow input[type=checkbox]{width:15px;height:15px;accent-color:var(--gg);}
+.ckrow label{font-size:13px;cursor:pointer;}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--g);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:all .3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+@keyframes up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--b);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="lp" class="screen active">
+  <div class="lbox">
+    <div class="llogo">
+      <div class="lico">CP</div>
+      <div><div class="ltitle">CIREC</div><div class="lsub">Business Plan</div></div>
+    </div>
+    <div class="tabs">
+      <div class="tab on" onclick="switchTab('login')">Connexion</div>
+      <div class="tab" onclick="switchTab('register')">Inscription</div>
+    </div>
+    <div class="err" id="e1">Nom d'utilisateur ou mot de passe incorrect.</div>
+    <div class="err" id="e2">Ce nom d'utilisateur existe déjà.</div>
+    <div id="lf">
+      <div class="fi"><label class="fl">Nom d'utilisateur</label><input class="inp" id="lu" type="text" placeholder="votre_nom"></div>
+      <div class="fi"><label class="fl">Mot de passe</label><input class="inp" id="lpass" type="password" placeholder="••••••••"></div>
+      <button class="bmain" onclick="doLogin()">Se connecter →</button>
+    </div>
+    <div id="rf" style="display:none">
+      <div class="fi"><label class="fl">Nom complet</label><input class="inp" id="rn" type="text" placeholder="Ex : Amina Loko"></div>
+      <div class="fi"><label class="fl">Nom d'utilisateur</label><input class="inp" id="ru" type="text" placeholder="Ex : amina_loko"></div>
+      <div class="fi"><label class="fl">Mot de passe</label><input class="inp" id="rpass" type="password" placeholder="Choisissez un mot de passe"></div>
+      <div class="fi"><label class="fl">Rôle</label>
+        <select class="sel" id="rr"><option>Apprenant</option><option>Formateur</option><option>Encadreur</option><option>Administrateur</option></select>
+      </div>
+      <button class="bmain" onclick="doRegister()">Créer mon compte →</button>
+    </div>
+    <div class="divl">CIREC · AVIJECO · Congo</div>
+    <div style="text-align:center;font-size:11px;color:var(--m)">Compte par défaut : cirec / cirec2024</div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="hp" class="screen">
+  <div class="tbar">
+    <div class="tlogo"><div class="tico">CP</div><div class="tname">CIREC Business Plan</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="uchip"><div class="uav" id="uav">?</div><div class="un" id="uname">-</div></div>
+      <button class="bout" onclick="doLogout()">Quitter</button>
+    </div>
+  </div>
+  <div class="hc">
+    <div class="hero">
+      <div class="hbadge">✨ CIREC · AVIJECO · Congo</div>
+      <div class="htitle">Crée ton <span>Business Plan</span><br>guidé pas à pas</div>
+      <div class="hsub">Sélectionne ton domaine, remplis le formulaire et génère ton business plan en PDF professionnel !</div>
+    </div>
+    <div class="stitle">🎯 Choisis ton <span>domaine</span></div>
+    <div class="dgrid" id="dgrid"></div>
+    <button class="bstart" id="bstart" disabled onclick="startBP()">📝 Créer mon Business Plan</button>
+    <div class="stitle">📁 Mes <span>Business Plans</span></div>
+    <div class="plist" id="plist"></div>
+  </div>
+</div>
+
+<!-- BP FORM -->
+<div id="bpp" class="screen">
+  <div class="bph">
+    <button class="bback" onclick="goHome()">← Retour</button>
+    <div class="dombadge"><span id="bpemi"></span><span id="bpdom"></span></div>
+  </div>
+  <div class="bpf" id="bpf"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const DOMAINS=[
+  {id:'patisserie',emoji:'🎂',name:'Pâtisserie',desc:'Gâteaux, pains, viennoiseries'},
+  {id:'decoration',emoji:'🌸',name:'Décoration événementielle',desc:'Mariages, fêtes, cérémonies'},
+  {id:'savonnerie',emoji:'🧴',name:'Savonnerie',desc:'Savons naturels, cosmétiques'},
+  {id:'couture',emoji:'✂️',name:'Couture',desc:'Vêtements, retouches, mode'},
+  {id:'coiffure',emoji:'💆',name:'Coiffure',desc:'Salon, tresses, soins capillaires'},
+  {id:'agro',emoji:'🥫',name:'Agro-alimentaire',desc:'Transformation, jus, conserves'},
+  {id:'maraichage',emoji:'🌾',name:'Maraîchage',desc:'Cultures légumières, jardinage'},
+  {id:'cordonnerie',emoji:'👟',name:'Cordonnerie Moderne',desc:'Chaussures, maroquinerie, cuir'},
+];
+
+const BPSEC={
+  patisserie:{produits:['Gâteaux personnalisés','Pains artisanaux','Viennoiseries','Tartes et quiches','Biscuits et cookies'],eq:['Four électrique','Pétrin','Moules à gâteaux','Réfrigérateur','Vitrine réfrigérée'],ch:['Farine','Sucre','Beurre','Œufs','Levure','Emballages']},
+  decoration:{produits:['Décoration mariage','Décoration baptême','Location de matériel','Décoration bureau','Compositions florales'],eq:['Véhicule de transport','Outils de fixation','Stock de tissus','Éclairages LED','Tables et chaises'],ch:['Fleurs','Tissus','Rubans','Ballons','Bougies','Transport']},
+  savonnerie:{produits:['Savon de ménage','Savon de beauté','Savon liquide','Lessive en poudre','Désinfectant'],eq:['Chaudière','Moules','Balance de précision','Tables de travail','Stockage'],ch:['Soude caustique','Huile de palme','Parfums','Colorants','Emballages']},
+  couture:{produits:['Confection robes','Costumes hommes','Uniformes scolaires','Retouches','Broderies'],eq:['Machine à coudre','Table à repasser','Fer à repasser','Mannequin','Ciseaux professionnels'],ch:['Tissus','Fils','Boutons','Fermetures éclair','Doublures']},
+  coiffure:{produits:['Coupe femme','Tresses africaines','Défrisage','Coloration','Soins capillaires'],eq:['Fauteuils de coiffure','Séchoir','Fer à lisser','Lavabo','Miroirs'],ch:['Shampoing','Défrisants','Colorants','Huiles','Accessoires']},
+  agro:{produits:['Jus de fruits frais','Confitures artisanales','Légumes séchés','Farine de manioc','Huile de palme raffinée'],eq:['Presse-fruits','Mixeur industriel','Séchoir','Étiqueteuse','Conditionnement'],ch:['Fruits locaux','Sucre','Bocaux','Étiquettes','Eau','Électricité']},
+  maraichage:{produits:['Tomates','Oignons','Légumes verts','Piments','Aubergines'],eq:['Outils agricoles','Système d\'arrosage','Semences','Engrais','Clôture'],ch:['Semences','Engrais','Eau','Main d\'œuvre','Transport']},
+  cordonnerie:{produits:['Réparation chaussures','Fabrication sandales','Ceintures cuir','Sacs à main','Entretien cuir'],eq:['Machine à coudre cuir','Tranchet','Forme à chaussure','Colle spéciale','Marteau'],ch:['Cuir','Semelles','Fil wax','Colle','Teintures']},
+};
+
+const GU=()=>{try{return JSON.parse(localStorage.getItem('cu'))||[];}catch{return[];}};
+const SU=u=>localStorage.setItem('cu',JSON.stringify(u));
+const GP=()=>{try{return JSON.parse(localStorage.getItem('cbp'))||[];}catch{return[];}};
+const SP=p=>localStorage.setItem('cbp',JSON.stringify(p));
+const GS=()=>{try{return JSON.parse(localStorage.getItem('cs'));}catch{return null;}};
+const SS=u=>localStorage.setItem('cs',JSON.stringify(u));
+const CS=()=>localStorage.removeItem('cs');
+
+(()=>{const u=GU();if(!u.find(x=>x.username==='cirec')){u.push({username:'cirec',password:'cirec2024',name:'Admin CIREC',role:'Administrateur'});SU(u);}})();
+
+let CU=null,SD=null,EID=null,RC={i:0,c:0};
+
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach((x,i)=>x.classList.toggle('on',(t==='login'&&i===0)||(t==='register'&&i===1)));
+  document.getElementById('lf').style.display=t==='login'?'block':'none';
+  document.getElementById('rf').style.display=t==='register'?'block':'none';
+  ['e1','e2'].forEach(id=>document.getElementById(id).style.display='none');
+}
+
+function doLogin(){
+  const u=document.getElementById('lu').value.trim();
+  const p=document.getElementById('lpass').value;
+  const found=GU().find(x=>x.username===u&&x.password===p);
+  if(!found){document.getElementById('e1').style.display='block';return;}
+  SS(found);enter(found);
+}
+
+function doRegister(){
+  const name=document.getElementById('rn').value.trim();
+  const u=document.getElementById('ru').value.trim();
+  const p=document.getElementById('rpass').value;
+  const role=document.getElementById('rr').value;
+  if(!name||!u||!p){toast('Remplis tous les champs');return;}
+  const users=GU();
+  if(users.find(x=>x.username===u)){document.getElementById('e2').style.display='block';return;}
+  const user={username:u,password:p,name,role};
+  users.push(user);SU(users);SS(user);enter(user);
+}
+
+function enter(user){
+  CU=user;
+  const init=user.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('uav').textContent=init;
+  document.getElementById('uname').textContent=user.name;
+  show('hp');renderDomains();renderPlans();
+}
+
+function doLogout(){CS();CU=null;SD=null;show('lp');}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+function renderDomains(){
+  document.getElementById('dgrid').innerHTML=DOMAINS.map(d=>`
+    <div class="dc" id="dc_${d.id}" onclick="selDom('${d.id}')">
+      <div class="dchk">✓</div>
+      <span class="demi">${d.emoji}</span>
+      <div class="dname">${d.name}</div>
+      <div class="ddesc">${d.desc}</div>
+    </div>`).join('');
+}
+
+function selDom(id){
+  SD=id;
+  document.querySelectorAll('.dc').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('dc_'+id).classList.add('sel');
+  document.getElementById('bstart').disabled=false;
+}
+
+function startBP(pid=null){
+  EID=pid;
+  let plan=null,did=SD;
+  if(pid){plan=GP().find(p=>p.id===pid);did=plan.did;}
+  const dom=DOMAINS.find(d=>d.id===did);
+  const sec=BPSEC[did];
+  document.getElementById('bpemi').textContent=dom.emoji;
+  document.getElementById('bpdom').textContent=dom.name;
+  document.getElementById('bpf').innerHTML=buildForm(dom,sec,plan);
+  show('bpp');
+}
+
+function buildForm(dom,sec,p){
+  p=p||{};
+  return `
+  <div class="sblk">
+    <div class="blt"><div class="bln">1</div>Identification du porteur de projet</div>
+    <div class="fi"><label class="fl">Nom et prénom *</label><input class="inp" id="f_nom" placeholder="Ex : Amina Loko" value="${p.nom||CU.name}"></div>
+    <div class="r2">
+      <div class="fi"><label class="fl">Âge</label><input class="inp" id="f_age" type="number" placeholder="24" value="${p.age||''}"></div>
+      <div class="fi"><label class="fl">Téléphone</label><input class="inp" id="f_tel" placeholder="06 xxx xxx" value="${p.tel||''}"></div>
+    </div>
+    <div class="fi"><label class="fl">Adresse / Quartier</label><input class="inp" id="f_adr" placeholder="Ex : Bacongo, Brazzaville" value="${p.adr||''}"></div>
+    <div class="fi"><label class="fl">Formation reçue à CIREC</label><input class="inp" id="f_form" placeholder="Ex : Formation pâtisserie - 3 mois" value="${p.form||''}"></div>
+  </div>
+
+  <div class="sblk">
+    <div class="blt"><div class="bln">2</div>Présentation de l'entreprise</div>
+    <div class="fi"><label class="fl">Nom de l'entreprise *</label><input class="inp" id="f_ent" placeholder="Ex : Douce Vie Pâtisserie" value="${p.ent||''}"></div>
+    <div class="r2">
+      <div class="fi"><label class="fl">Forme juridique</label>
+        <select class="sel" id="f_fjur">
+          <option>Entreprise individuelle</option><option>SARL</option><option>Association</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="fi"><label class="fl">Date de démarrage</label><input class="inp" id="f_date" type="date" value="${p.date||''}"></div>
+    </div>
+    <div class="fi"><label class="fl">Localisation</label><input class="inp" id="f_loc" placeholder="Ex : Marché Total, Brazzaville" value="${p.loc||''}"></div>
+    <div class="fi"><label class="fl">Description de l'activité</label><textarea class="ta" id="f_desc" placeholder="Décrivez brièvement votre activité...">${p.desc||''}</textarea></div>
+  </div>
+
+  <div class="sblk">
+    <div class="blt"><div class="bln">3</div>Produits & Services proposés</div>
+    ${sec.produits.map((pr,i)=>`<div class="ckrow"><input type="checkbox" id="pr${i}" ${p.prods&&p.prods.includes(pr)?'checked':''}><label for="pr${i}">${pr}</label></div>`).join('')}
+    <div class="fi" style="margin-top:10px"><label class="fl">Autres produits</label><input class="inp" id="f_aprod" placeholder="Ajoutez d'autres produits..." value="${p.aprod||''}"></div>
+    <div class="fi"><label class="fl">Votre avantage concurrentiel</label><textarea class="ta" id="f_avt" placeholder="Qu'est-ce qui vous différencie de la concurrence ?">${p.avt||''}</textarea></div>
+  </div>
+
+  <div class="sblk">
+    <div class="blt"><div class="bln">4</div>Étude de marché</div>
+    <div class="fi"><label class="fl">Clientèle cible</label><textarea class="ta" id="f_cli" placeholder="Décrivez vos clients potentiels (âge, revenus, habitudes...)">${p.cli||''}</textarea></div>
+    <div class="fi"><label class="fl">Zone de chalandise</label><input class="inp" id="f_zone" placeholder="Ex : Quartier Bacongo et environs" value="${p.zone||''}"></div>
+    <div class="fi"><label class="fl">Principaux concurrents</label><textarea class="ta" id="f_conc" placeholder="Citez vos concurrents et leurs faiblesses...">${p.conc||''}</textarea></div>
+    <div class="fi"><label class="fl">Stratégie de vente</label><textarea class="ta" id="f_svt" placeholder="Comment allez-vous vendre ? (Réseaux sociaux, marché, bouche à oreille...)">${p.svt||''}</textarea></div>
+  </div>
+
+  <div class="sblk">
+    <div class="blt"><div class="bln">5</div>Moyens de production</div>
+    <div style="margin-bottom:10px">${sec.eq.map((e,i)=>`<div class="ckrow"><input type="checkbox" id="eq${i}" ${p.eqs&&p.eqs.includes(e)?'checked':''}><label for="eq${i}">${e}</label></div>`).join('')}</div>
+    <div class="fi"><label class="fl">Autres équipements</label><input class="inp" id="f_aeq" placeholder="Ajoutez d'autres équipements..." value="${p.aeq||''}"></div>
+    <div class="fi"><label class="fl">Nombre d'employés prévus</label><input class="inp" id="f_emp" type="number" placeholder="Ex : 2" value="${p.emp||''}"></div>
+  </div>
+
+  <div class="sblk">
+    <div class="blt"><div class="bln">6</div>Budget prévisionnel (CFA)</div>
+    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--gg);margin-bottom:8px">Investissements de départ</div>
+    <table class="btab"><thead><tr><th>Désignation</th><th>Montant (CFA)</th><th></th></tr></thead>
+    <tbody id="itab">
+      ${(p.invs||sec.eq.slice(0,3).map(e=>({l:e,m:''}))).map((r,i)=>`<tr id="inv${i}"><td><input class="inp" placeholder="Ex: Four électrique" value="${r.l||''}"></td><td><input class="inp" type="number" placeholder="0" value="${r.m||''}"></td><td><button class="delr" onclick="delR('inv${i}')">✕</button></td></tr>`).join('')}
+    </tbody></table>
+    <button class="addr" onclick="addR('itab','inv')">+ Ajouter un investissement</button>
+
+    <div style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--o);margin:14px 0 8px">Charges mensuelles</div>
+    <table class="btab"><thead><tr><th>Désignation</th><th>Montant (CFA)</th><th></th></tr></thead>
+    <tbody id="ctab">
+      ${(p.chgs||sec.ch.slice(0,3).map(c=>({l:c,m:''}))).map((r,i)=>`<tr id="chr${i}"><td><input class="inp" placeholder="Ex: Farine" value="${r.l||''}"></td><td><input class="inp" type="number" placeholder="0" value="${r.m||''}"></td><td><button class="delr" onclick="delR('chr${i}')">✕</button></td></tr>`).join('')}
+    </tbody></table>
+    <button class="addr" onclick="addR('ctab','chr')">+ Ajouter une charge</button>
+  </div>
+
+  <div class="sblk">
+    <div class="blt"><div class="bln">7</div>Prévision des revenus</div>
+    <div class="r2">
+      <div class="fi"><label class="fl">Ventes journalières (CFA)</label><input class="inp" id="f_vj" type="number" placeholder="Ex : 15000" value="${p.vj||''}" oninput="calcRev()"></div>
+      <div class="fi"><label class="fl">Jours travaillés / mois</label><input class="inp" id="f_jrs" type="number" placeholder="Ex : 25" value="${p.jrs||''}" oninput="calcRev()"></div>
+    </div>
+    <div class="fi"><label class="fl">Revenu mensuel estimé (CFA)</label><input class="inp" id="f_rm" type="number" placeholder="Calculé automatiquement" value="${p.rm||''}"></div>
+    <div class="fi"><label class="fl">Objectif à 6 mois</label><textarea class="ta" id="f_obj" placeholder="Décrivez vos objectifs pour les 6 prochains mois...">${p.obj||''}</textarea></div>
+  </div>
+
+  <div class="sblk">
+    <div class="blt"><div class="bln">8</div>Plan de financement</div>
+    <div class="r2">
+      <div class="fi"><label class="fl">Apport personnel (CFA)</label><input class="inp" id="f_ap" type="number" placeholder="0" value="${p.ap||''}"></div>
+      <div class="fi"><label class="fl">Financement recherché (CFA)</label><input class="inp" id="f_fin" type="number" placeholder="0" value="${p.fin||''}"></div>
+    </div>
+    <div class="fi"><label class="fl">Source de financement</label>
+      <select class="sel" id="f_src">
+        <option>Famille / Proches</option><option>Microfinance</option><option>ONG / Bailleur</option><option>Banque</option><option>AVIJECO</option><option>Autre</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="bsave" onclick="saveBP()">💾 Sauvegarder</button>
+  <button class="bpdfbp" onclick="genPDF()">📄 Générer le PDF</button>
+  <button class="bwa" onclick="sendWhatsApp()">💬 Envoyer au centre CIREC via WhatsApp</button>
+  <div style="height:40px"></div>`;
+}
+
+function calcRev(){
+  const vj=parseInt(document.getElementById('f_vj')?.value)||0;
+  const jrs=parseInt(document.getElementById('f_jrs')?.value)||0;
+  if(vj&&jrs){const rm=document.getElementById('f_rm');if(rm)rm.value=vj*jrs;}
+}
+
+function addR(tid,pre){
+  const tb=document.getElementById(tid);
+  const id=`${pre}${RC[pre[0]]++}`;
+  const tr=document.createElement('tr');tr.id=id;
+  tr.innerHTML=`<td><input class="inp" placeholder="Désignation"></td><td><input class="inp" type="number" placeholder="0"></td><td><button class="delr" onclick="delR('${id}')">✕</button></td>`;
+  tb.appendChild(tr);
+}
+function delR(id){const el=document.getElementById(id);if(el)el.remove();}
+
+function collectBP(){
+  const did=SD||GP().find(p=>p.id===EID)?.did;
+  const sec=BPSEC[did];
+  const prods=sec?.produits.filter((_,i)=>document.getElementById('pr'+i)?.checked)||[];
+  const eqs=sec?.eq.filter((_,i)=>document.getElementById('eq'+i)?.checked)||[];
+  const invs=[...document.getElementById('itab').querySelectorAll('tr')].map(tr=>{const ins=tr.querySelectorAll('input');return{l:ins[0]?.value||'',m:ins[1]?.value||''};}).filter(r=>r.l);
+  const chgs=[...document.getElementById('ctab').querySelectorAll('tr')].map(tr=>{const ins=tr.querySelectorAll('input');return{l:ins[0]?.value||'',m:ins[1]?.value||''};}).filter(r=>r.l);
+  return{nom:v('f_nom'),age:v('f_age'),tel:v('f_tel'),adr:v('f_adr'),form:v('f_form'),
+    ent:v('f_ent'),fjur:v('f_fjur'),date:v('f_date'),loc:v('f_loc'),desc:v('f_desc'),
+    prods,aprod:v('f_aprod'),avt:v('f_avt'),
+    cli:v('f_cli'),zone:v('f_zone'),conc:v('f_conc'),svt:v('f_svt'),
+    eqs,aeq:v('f_aeq'),emp:v('f_emp'),invs,chgs,
+    vj:v('f_vj'),jrs:v('f_jrs'),rm:v('f_rm'),obj:v('f_obj'),
+    ap:v('f_ap'),fin:v('f_fin'),src:v('f_src')};
+}
+function v(id){return document.getElementById(id)?.value||'';}
+
+function saveBP(){
+  const data=collectBP();
+  if(!data.nom||!data.ent){toast('Remplis au minimum le nom et l\'entreprise');return;}
+  const plans=GP();
+  const did=SD||GP().find(p=>p.id===EID)?.did;
+  if(EID){const idx=plans.findIndex(p=>p.id===EID);if(idx>=0)plans[idx]={...plans[idx],...data,did,upd:new Date().toLocaleDateString('fr-FR')};}
+  else plans.unshift({id:'bp'+Date.now(),did,...data,cre:new Date().toLocaleDateString('fr-FR')});
+  SP(plans);toast('✅ Business plan sauvegardé !');
+}
+
+function goHome(){show('hp');SD=null;EID=null;document.querySelectorAll('.dc').forEach(c=>c.classList.remove('sel'));document.getElementById('bstart').disabled=true;renderPlans();}
+
+function renderPlans(){
+  const plans=GP();
+  const cont=document.getElementById('plist');
+  if(!plans.length){cont.innerHTML='<div class="empty"><div style="font-size:38px;margin-bottom:10px">📝</div><p style="font-size:13px">Aucun business plan encore.<br>Sélectionne un domaine et commence !</p></div>';return;}
+  cont.innerHTML=plans.map(p=>{
+    const d=DOMAINS.find(x=>x.id===p.did);
+    return `<div class="pi">
+      <div class="pemi">${d?.emoji||'📁'}</div>
+      <div class="pinfo"><div class="pname">${p.ent||'Sans titre'}</div><div class="pmeta">${d?.name||''} · ${p.cre||''}</div></div>
+      <div class="pacts">
+        <button class="bsm bview" onclick="startBP('${p.id}')">✏️</button>
+        <button class="bsm bpdf2" onclick="genPDFById('${p.id}')">📄</button>
+        <button class="bsm bdel" onclick="delPlan('${p.id}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function delPlan(id){if(!confirm('Supprimer ?'))return;SP(GP().filter(p=>p.id!==id));renderPlans();toast('🗑 Supprimé');}
+function genPDFById(id){const plan=GP().find(p=>p.id===id);if(!plan)return;const dom=DOMAINS.find(d=>d.id===plan.did);buildPDF(plan,dom);}
+function genPDF(){const data=collectBP();const did=SD||GP().find(p=>p.id===EID)?.did;const dom=DOMAINS.find(d=>d.id===did);buildPDF(data,dom);}
+
+function buildPDF(p,dom){
+  const{jsPDF}=window.jspdf;const doc=new jsPDF();let y=0;
+  function hdr(){doc.setFillColor(26,107,60);doc.rect(0,0,210,38,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(17);doc.text('BUSINESS PLAN',14,15);doc.setFontSize(12);doc.setFont('helvetica','normal');doc.text(`${dom.name} — ${p.ent||'Sans titre'}`,14,25);doc.setFontSize(8);doc.text('CIREC · AVIJECO · Centre d\'Insertion et de Réinsertion des Entrepreneurs du Congo',14,33);y=47;}
+  function sec(t){if(y>260){doc.addPage();hdr();}doc.setFillColor(240,248,244);doc.rect(10,y-5,190,9,'F');doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(26,107,60);doc.text(t,14,y+1);y+=11;}
+  function fld(l,val){if(!val)return;if(y>272){doc.addPage();hdr();}doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);doc.text(l+' :',14,y);doc.setFont('helvetica','normal');doc.setTextColor(30,30,30);const lines=doc.splitTextToSize(val+'',155);doc.text(lines,54,y);y+=lines.length*4.5+2;}
+  hdr();
+  sec('1. IDENTIFICATION DU PORTEUR DE PROJET');
+  fld('Nom & Prénom',p.nom);fld('Âge',p.age?p.age+' ans':'');fld('Téléphone',p.tel);fld('Adresse',p.adr);fld('Formation CIREC',p.form);
+  sec('2. PRÉSENTATION DE L\'ENTREPRISE');
+  fld('Nom entreprise',p.ent);fld('Forme juridique',p.fjur);fld('Date démarrage',p.date);fld('Localisation',p.loc);fld('Description',p.desc);
+  sec('3. PRODUITS & SERVICES');
+  if(p.prods?.length)fld('Produits sélectionnés',p.prods.join(', '));
+  fld('Autres produits',p.aprod);fld('Avantage concurrentiel',p.avt);
+  sec('4. ÉTUDE DE MARCHÉ');
+  fld('Clientèle cible',p.cli);fld('Zone',p.zone);fld('Concurrents',p.conc);fld('Stratégie de vente',p.svt);
+  sec('5. BUDGET PRÉVISIONNEL');
+  if(p.invs?.length){
+    if(y>265){doc.addPage();hdr();}
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(26,107,60);doc.text('Investissements :',14,y);y+=5;
+    let tot=0;p.invs.forEach(r=>{if(y>272){doc.addPage();hdr();}doc.setFont('helvetica','normal');doc.setTextColor(50,50,50);doc.text('• '+r.l,17,y);doc.text((parseInt(r.m)||0).toLocaleString()+' CFA',195,y,{align:'right'});tot+=parseInt(r.m)||0;y+=4.5;});
+    doc.setFont('helvetica','bold');doc.setTextColor(26,107,60);doc.text('TOTAL :',14,y);doc.text(tot.toLocaleString()+' CFA',195,y,{align:'right'});y+=7;
+  }
+  if(p.chgs?.length){
+    if(y>265){doc.addPage();hdr();}
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(249,115,22);doc.text('Charges mensuelles :',14,y);y+=5;
+    let tot=0;p.chgs.forEach(r=>{if(y>272){doc.addPage();hdr();}doc.setFont('helvetica','normal');doc.setTextColor(50,50,50);doc.text('• '+r.l,17,y);doc.text((parseInt(r.m)||0).toLocaleString()+' CFA',195,y,{align:'right'});tot+=parseInt(r.m)||0;y+=4.5;});
+    doc.setFont('helvetica','bold');doc.setTextColor(249,115,22);doc.text('TOTAL :',14,y);doc.text(tot.toLocaleString()+' CFA',195,y,{align:'right'});y+=7;
+  }
+  sec('6. PRÉVISION DES REVENUS');
+  fld('Ventes journalières',(parseInt(p.vj)||0).toLocaleString()+' CFA');fld('Jours/mois',(p.jrs||25)+' jours');fld('Revenu mensuel estimé',(parseInt(p.rm)||0).toLocaleString()+' CFA');fld('Objectif 6 mois',p.obj);
+  sec('7. PLAN DE FINANCEMENT');
+  fld('Apport personnel',(parseInt(p.ap)||0).toLocaleString()+' CFA');fld('Financement recherché',(parseInt(p.fin)||0).toLocaleString()+' CFA');fld('Source',p.src);
+  const pages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFillColor(26,107,60);doc.rect(0,287,210,10,'F');doc.setTextColor(255,255,255);doc.setFontSize(7);doc.setFont('helvetica','normal');doc.text(`CIREC Business Plan · Généré le ${new Date().toLocaleDateString('fr-FR')} · Page ${i}/${pages}`,105,293,{align:'center'});}
+  doc.save(`bp-${(p.ent||'cirec').replace(/\s+/g,'-').toLowerCase()}.pdf`);
+  toast('📄 PDF généré !');
+}
+
+function sendWhatsApp(){
+  const data=collectBP();
+  if(!data.nom||!data.ent){toast("Remplis au minimum le nom et l'entreprise");return;}
+  const did=SD||GP().find(p=>p.id===EID)?.did;
+  const dom=DOMAINS.find(d=>d.id===did);
+  const totalInvest=(data.invs||[]).reduce((s,r)=>s+(parseInt(r.m)||0),0);
+  const totalCharges=(data.chgs||[]).reduce((s,r)=>s+(parseInt(r.m)||0),0);
+  const msg=`🌿 *BUSINESS PLAN CIREC*
+250125012501250125012501250125012501250125012501250125012501
+📌 *Domaine :* ${dom?.name||""}
+👤 *Nom :* ${data.nom}
+📞 *T�l :* ${data.tel||"N/A"}
+📍 *Adresse :* ${data.adr||"N/A"}
+🎓 *Formation CIREC :* ${data.form||"N/A"}
+
+🏢 *ENTREPRISE*
+- Nom : ${data.ent}
+- Forme : ${data.fjur||"N/A"}
+- Lieu : ${data.loc||"N/A"}
+
+🛍 *PRODUITS*
+- ${(data.prods||[]).join(", ")||"N/A"}
+
+👥 *MARCH�*
+- Clients : ${data.cli||"N/A"}
+- Zone : ${data.zone||"N/A"}
+
+💰 *BUDGET*
+- Investissement : ${totalInvest.toLocaleString()} CFA
+- Charges/mois : ${totalCharges.toLocaleString()} CFA
+- Revenus/mois : ${(parseInt(data.rm)||0).toLocaleString()} CFA
+
+💳 *FINANCEMENT*
+- Apport : ${(parseInt(data.ap)||0).toLocaleString()} CFA
+- Besoin : ${(parseInt(data.fin)||0).toLocaleString()} CFA
+- Source : ${data.src||"N/A"}
+
+📅 Envoy� le ${new Date().toLocaleDateString("fr-FR")}
+_CIREC 00b7 AVIJECO 00b7 Congo_`;
+  const phone="242069039304";
+  const url="https://wa.me/"+phone+"?text="+encodeURIComponent(msg);
+  window.open(url,"_blank");
+  toast("2705 Ouverture WhatsApp...");
+}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('lp').classList.contains('active')){document.getElementById('lf').style.display!=='none'?doLogin():doRegister();}});
+
+const sess=GS();if(sess)enter(sess);
+</script>
+</body>
+</html>
